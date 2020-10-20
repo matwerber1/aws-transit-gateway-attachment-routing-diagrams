@@ -2,7 +2,6 @@
 
 This project contains diagrams to help you understand [AWS Transit Gateway (TGW)](https://aws.amazon.com/transit-gateway/) routing.
 
-
 ## Key Takeaways
 
 1. A transit gateway "attachment" is an Elastic Network Interface (ENI)
@@ -58,3 +57,8 @@ This is also successful. In this case, traffic will exit the TGW directly in the
 In this example, the source AZ does not have a TGW attachment. In this scenario, the source AZ (regardless of subnet) will never be able to reach the TGW.
 
 ![example 5](example5.png)
+
+
+### Credits
+
+Thanks to my colleague Hrushi Gangur for helping advise on these diagrams.

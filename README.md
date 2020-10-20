@@ -40,13 +40,13 @@ The TGW attachment in VPC-2 AZ-B **cannot** be used to route cross-AZ traffic to
 
 Here, the source and target are in different AZs. In the destination VPC, both AZ A and AZ B have a TGW attachment. 
 
-Traffic exiting the TGW into VPC-2 will always leave from the TGW attachment in the same AZ as the source AZ (in this case, AZ-A). From there, it can successfully route to the target's AZ (AZ-B) because AZ-B has a TGW attachment.
+Traffic exiting the TGW into VPC-2 will leave from the TGW attachment *in the same AZ as the source AZ* (in this case, AZ-A), if that AZ has a TGW attachment. From there, it can successfully route to the target's AZ (AZ-B) because AZ-B has a TGW attachment.
 
 ![example 3](example3.png)
 
 ### Example 4
 
-Here, the source and target are again in different AZs. However, this time, the destination VPC only has a TGW attachment in the target AZ (AZ-B) and does not have an attachment in the same AZ as the sender (AZ-A).
+Here, the source and target are again in different AZs like Example 3. However, this time, the destination VPC only has a TGW attachment in the target AZ (AZ-B) and does not have an attachment in the same AZ as the sender (AZ-A).
 
 This is also successful. In this case, traffic will exit the TGW directly in the target AZ, AZ-B.
 

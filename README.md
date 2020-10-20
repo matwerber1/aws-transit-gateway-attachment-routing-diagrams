@@ -8,7 +8,7 @@ This project contains diagrams to help you understand [AWS Transit Gateway (TGW)
 
 When the source AZ does not have a TGW attachment, the destination AZ is always unreachable:
 
-![example 1](example1.png)
+![example 1](example1.png?)
 
 ### Example 2
 

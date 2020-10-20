@@ -8,7 +8,7 @@ This project contains diagrams to help you understand [AWS Transit Gateway (TGW)
 
 When the source AZ does not have a TGW attachment, the destination AZ is always unreachable:
 
-![example 1](example-1.png?)
+![example 1](example-1.png)
 
 ### Example 2
 
@@ -38,7 +38,7 @@ When the source AZ and destination AZ are different, and the destination VPC doe
 
 Like example 5, the destination VPC does not have a TGW attachment in the same AZ as the source (AZ-A). However, this time, the destination VPC has a TGW attachment in both the target AZ (AZ-B) and one other AZ (AZ-C).
 
-Traffic exiting TGW will prefer to exit via the bold red line in the target AZ (AZ-B), but its **possible** that some traffic may exit in AZ-C via the dotted red line and then cross AZs to the final target in AZ-B:
+Traffic exiting TGW will prefer to exit via the bold red line in the target AZ (AZ-B), but its *possible* that some traffic may exit in AZ-C via the dotted red line and then cross AZs to the final target in AZ-B:
 
 ![example 6](example6.png)
 

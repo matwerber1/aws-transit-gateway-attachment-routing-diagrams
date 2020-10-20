@@ -2,6 +2,10 @@
 
 This project contains diagrams to help you understand [AWS Transit Gateway (TGW)](https://aws.amazon.com/transit-gateway/) routing.
 
+## Disclaimer
+
+These diagrams are based on my personal understanding as of October 2020. As always, refer to official AWS documentation for confirmation and/or updates.
+
 ## Key Takeaways
 
 1. A transit gateway "attachment" is an Elastic Network Interface (ENI)

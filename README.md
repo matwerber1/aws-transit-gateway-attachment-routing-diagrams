@@ -18,7 +18,7 @@ When the destination AZ does not have a TGW attachment, the destination AZ is al
 
 ### Example 3
 
-When the source and destination AZs are the same and both AZs have a TGW attachment, the routing will prefer to exit the TGW via the attachment in the same AZ (AZ-A) via the bold red path. However, it's *possible* that traffic might exit via the red dotted line in destination AZ-B and then cross over to final target in AZ-A via the red dotted line:
+When the source and destination AZs are the same and both AZs have a TGW attachment, the routing will prefer to exit the TGW via the attachment in the same AZ (AZ-A) via the bold red path. However, it's *possible* that some traffic might exit via the red dotted line in destination AZ-B and then cross over to final target in AZ-A via the red dotted line:
 
 ![example 3](example3.png)
 

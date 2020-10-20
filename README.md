@@ -2,61 +2,45 @@
 
 This project contains diagrams to help you understand [AWS Transit Gateway (TGW)](https://aws.amazon.com/transit-gateway/) routing.
 
-## Key Takeaways
-
-1. A transit gateway "attachment" is an Elastic Network Interface (ENI)
-
-2. In a given VPC, one, and only one, subnet per AZ can have an attachment to a given TGW.
-
-3. A requests source AZ *must* have a TGW attachment in one of its subnets to reach TGW destinations.
-
-4. A target's destination AZ *must* have a TGW attachment to receive traffic from TGW.
-
-5. The source and destination AZs *do not* have to be the same. 
-
-6. When source and destination AZs are different, routing may vary depending on which AZs have attachments. This is better explained by comparing Example 3 and Example 4, below. 
-
-7. When source and target VPCs are in the same AWS account, an AZ (such as us-east-1a) refers to the same physical data centers. 
-
-8. When source and target VPCs are in different AWS accounts, an AZ (such as us-east-1a) might refer to different physical data centers.[Read more about this here](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html). At the end of the day, as long as the source and destination AZs both have TGW attachments, it doesn't impact connectivity across the TGW (but might mean traffic is crossing AZs).
-
 ## Diagrams
 
 ### Example 1
 
-Below, the source and destination EC2 are in the same AZ and both AZs have a TGW attachment. The TGW attachment is in a different subnet than the EC2 instances, but that does not matter. 
+When the source AZ does not have a TGW attachment, the destination AZ is always unreachable:
 
 ![example 1](example1.png)
 
 ### Example 2
 
-Here, the source AZ has a TGW attachment, but the destination AZ does not. The target is therefore not reachable over the TGW.
-
-The TGW attachment in VPC-2 AZ-B **cannot** be used to route cross-AZ traffic to the target in VPC-2 AZ-A. 
+When the destination AZ does not have a TGW attachment, the destination AZ is always unreachable via TGW:
 
 ![example 2](example2.png)
 
 ### Example 3
 
-Here, the source and target are in different AZs. In the destination VPC, both AZ A and AZ B have a TGW attachment. 
-
-Traffic exiting the TGW into VPC-2 will leave from the TGW attachment *in the same AZ as the source AZ* (in this case, AZ-A), if that AZ has a TGW attachment. From there, it can successfully route to the target's AZ (AZ-B) because AZ-B has a TGW attachment.
+When the source and destination AZs are the same and both AZs have a TGW attachment, the routing will prefer to exit the TGW via the attachment in the same AZ (AZ-A) via the bold red path. However, it's *possible* that traffic might exit via the red dotted line in destination AZ-B and then cross over to final target in AZ-A via the red dotted line:
 
 ![example 3](example3.png)
 
 ### Example 4
 
-Here, the source and target are again in different AZs like Example 3. However, this time, the destination VPC only has a TGW attachment in the target AZ (AZ-B) and does not have an attachment in the same AZ as the sender (AZ-A).
-
-This is also successful. In this case, traffic will exit the TGW directly in the target AZ, AZ-B.
+When the destination AZ is different from the source AZ, but the destination AZ has a TGW attachment, will again (like Example 1) prefer to exit in via the attachment in the same AZ as the source (AZ-A) and then route cross-AZ to the final target via the bold red line. However, it's *possible* that some traffic may exit directly via the attachment in the destination AZ (AZ-B) via the red dotted line:
 
 ![example 4](example4.png)
 
 ### Example 5
 
-In this example, the source AZ does not have a TGW attachment. In this scenario, the source AZ (regardless of subnet) will never be able to reach the TGW.
+When the source AZ and destination AZ are different, and the destination VPC does **not** have a TGW attachment in the same AZ as the source but does have an attachment in the target AZ, the traffic will always route as follows:
 
 ![example 5](example5.png)
+
+### Example 6
+
+Like example 5, the destination VPC does not have a TGW attachment in the same AZ as the source (AZ-A). However, this time, the destination VPC has a TGW attachment in both the target AZ (AZ-B) and one other AZ (AZ-C).
+
+Traffic exiting TGW will prefer to exit via the bold red line in the target AZ (AZ-B), but its **possible** that some traffic may exit in AZ-C via the dotted red line and then cross AZs to the final target in AZ-B:
+
+![example 6](example6.png)
 
 
 ### Credits
